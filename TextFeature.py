@@ -9,7 +9,7 @@ Time Limit Exceeded!
 '''
 import torch
 import numpy as np
-import MSERN.dataset.LoadData as LoadData
+import dataset.LoadData as LoadData
 
 class ExtractTextFeature(torch.nn.Module):
     def __init__(self, opt, dropout_rate=0.2):

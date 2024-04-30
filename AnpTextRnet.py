@@ -8,7 +8,7 @@ FilePath: /event/zlj_complex_event/EnventDetection/MMFSTSR_v12/AnpTextRnet.py
 Time Limit Exceeded!
 '''
 import torch
-import MSERN.dataset.LoadData as LoadData
+import dataset.LoadData as LoadData
 import TextFeature
 import ANPFeat
 import torch.nn.functional as F
@@ -50,36 +50,17 @@ class RepresentationFusion(torch.nn.Module):
 class RNet(torch.nn.Module):
     def __init__(self, opt):
         super(RNet, self).__init__()
-        text_feature_size=opt.TEXT_HIDDEN*2 #text_feature.size(1)
-        anp_feature_size=opt.ANPFeatHidden*2 #anp_feature.size(1)
-        # print(text_feature.size(1), anp_feature.size(1))
-        # self.text_layerNorm = torch.nn.LayerNorm([text_feature_size])
-        # self.anp_layerNorm = torch.nn.LayerNorm([anp_feature_size])
+        text_feature_size=opt.TEXT_HIDDEN*2 
+        anp_feature_size=opt.ANPFeatHidden*2
         self.text_attention = RepresentationFusion(text_feature_size, anp_feature_size)
         self.text_linear = torch.nn.Linear(512, 512)
     def forward(self, text_feature, text_seq, anp_feature, attribute_seq):
-        # text_feature = self.text_layerNorm(text_feature)
-        # anp_feature = self.anp_layerNorm(anp_feature)
-                                             # [32, 512]      [32, 512]       [60, 32, 512]
-        text_vector     =self.text_attention(text_feature, anp_feature, text_seq) # v_t
+        text_vector     =self.text_attention(text_feature, anp_feature, text_seq) 
 
         # final fuse
         text_vector_N = F.normalize(text_vector)
         anp_feature_N = F.normalize(anp_feature)
-        score = text_vector_N.T.mm(anp_feature_N)  # inner product 论文是 余弦相似度
+        score = text_vector_N.T.mm(anp_feature_N) 
 
         output = torch.relu(self.text_linear(text_vector.mm(score))) # S_J
-
-        #output=torch.relu(self.text_linear(torch.cat([text_vector,anp_feature],dim=1)))
         return output
-if __name__ == "__main__":
-    text=TextFeature.ExtractTextFeature(LoadData.TEXT_LENGTH, LoadData.TEXT_HIDDEN)
-    anp=ANPFeat.ANPFeat()
-    fuse=RNet()
-    for vision_feature,text_index,anp_index,y_true,id in LoadData.train_loader:
-        text_result,text_seq=text(text_index,None)
-        anp_result,anp_seq=anp(anp_index)
-        result=fuse(text_result,text_seq.permute(1,0,2),anp_result,anp_seq.permute(1,0,2))
-        print(result.shape)
-
-        break

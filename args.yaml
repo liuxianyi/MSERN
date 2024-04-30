@@ -1,10 +1,12 @@
 common:
     device: "cuda:0"
-    ANP: "./ANPS/{}/anps.npy"
-    Text: "./text/{}/text.npy"
-    Vision: "./feat/{}/video.npy"
-    Y: "./feat/{}/Y.npy"
+    ANP: "/home/goog/Desktop/worker/paper-code/datasets/UCF101/ANPs/{}/text.npy"
+    Text: "/home/goog/Desktop/worker/paper-code/datasets/UCF101/text/{}/text.npy"
+    Vision: "/home/goog/Desktop/worker/paper-code/datasets/UCF101/feat/{}/video.npy"
+    video_list: "/home/goog/Desktop/worker/paper-code/datasets/UCF101/tmp/{}/name_list.npy"
+    Y: "/home/goog/Desktop/worker/paper-code/datasets/UCF101/feat/{}/Y.npy"
     BatchSize : 64
+    
     TEXT_LENGTH: 60 
     TEXT_HIDDEN: 256 
     ANPFeatHidden: 256
@@ -16,6 +18,53 @@ common:
     curve_tensorb: ./plot/plot_20240430/
     log_dir: ./log/log_20240430.txt
     visual_ts: False
+    epochs: 200
+    lam1: 100 # 分类损失
+    lam2: 1 # 正交损失
+    lam3: 1 # 重构损失
+    learning_rate: 0.1
+    lr_update: 1000
+    log_step: 1
+    test_epoch: 1
+    grad_clip: 1
+    resume: False
+    difficult_examples: True
+
+    lr_scheduler:
+        type: STEP
+        lr_steps: [50,120]
+        lr_mults: [0.1, 0.1, 0.1]
+
+        base_lr: 0.2
+        warmup_steps: 2500
+        warmup_lr: 0.8
+        max_iter: 62500
+
+    optimizer:
+        type: SGD
+        momentum: 0.9
+        weight_decay: 0.0001
+        nesterov: True
+common:
+    device: "cuda:0"
+    TextData: "/media/Harddisk_A/Datasets/goog/flickr/flickrFeature/TextInfo.txt"  # 存放文本数据 
+    WordIndex: "/media/Harddisk_A/Datasets/goog/flickr/flickrFeature/text_embedding/vocab.pickle"
+    ANP: "/media/Harddisk_A/Datasets/goog/flickr/flickrFeature/anp.txt"
+    TextEmbbeding: "/media/Harddisk_A/Datasets/goog/flickr/flickrFeature/text_embedding/vector.txt"
+    VisionFeature: "/media/Harddisk_A/Datasets/goog/flickr/flickrFeature/vision" # 视觉特征的文件夹
+    BatchSize : 64
+    TEXT_LENGTH: 60 
+    TEXT_HIDDEN: 256 # 
+    ANPFeatHidden: 256
+    dim_vision_encoder: 2048
+    dim_text_encoder: 512 # TEXT_HIDDEN*2
+    ##dim_encoder_VTR:
+    ##out_dim_VTR:
+    class_in_dim: 2084
+    class_out_dim: 20
+    logger_name: ./run/run_20240430/
+    curve_tensorb: ./plot/plot_20240430/
+    log_dir: ./log/log_20240430.txt
     epochs: 200
     lam1: 100 # 分类损失
     lam2: 1 # 正交损失

@@ -14,7 +14,7 @@ from model import *
 from utils import *
 import logging
 
-from MSERN.dataset.LoadData import my_data_set, load_data, train_val_test_split
+from dataset.LoadData import my_data_set
 
 
 
@@ -34,6 +34,7 @@ def main():
     # create save dir
     pathlib.Path(opt.logger_name).mkdir(parents=True, exist_ok=True)
     pathlib.Path(opt.curve_tensorb).mkdir(parents=True, exist_ok=True)
+    pathlib.Path("/".join(opt.log_dir.split("/")[:-1])).mkdir(parents=True, exist_ok=True)
     # logger...
     logging.basicConfig(
         level=logging.INFO, 
