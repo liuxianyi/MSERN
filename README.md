@@ -9,10 +9,10 @@ We evaluate our proposed method on a micro-video event detection dataset and
 experiment results show the superior performance compared with state-of-the-art methods.
 
 ## method
-![alt](https://)
+![alt](msern.png)
 
 ## results
-
+![alt](results.png)
 
 ## cite
 ```

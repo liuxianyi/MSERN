@@ -47,28 +47,26 @@ common:
         nesterov: True
 common:
     device: "cuda:0"
-    TextData: "/media/Harddisk_A/Datasets/goog/flickr/flickrFeature/TextInfo.txt"  # 存放文本数据 
-    WordIndex: "/media/Harddisk_A/Datasets/goog/flickr/flickrFeature/text_embedding/vocab.pickle"
-    ANP: "/media/Harddisk_A/Datasets/goog/flickr/flickrFeature/anp.txt"
-    TextEmbbeding: "/media/Harddisk_A/Datasets/goog/flickr/flickrFeature/text_embedding/vector.txt"
-    VisionFeature: "/media/Harddisk_A/Datasets/goog/flickr/flickrFeature/vision" # 视觉特征的文件夹
+    TextData: "xx" 
+    WordIndex: "xx"
+    ANP: "xx"
+    TextEmbbeding: "xx"
+    VisionFeature: "xx" 
     BatchSize : 64
     TEXT_LENGTH: 60 
-    TEXT_HIDDEN: 256 # 
+    TEXT_HIDDEN: 256 
     ANPFeatHidden: 256
     dim_vision_encoder: 2048
-    dim_text_encoder: 512 # TEXT_HIDDEN*2
-    ##dim_encoder_VTR:
-    ##out_dim_VTR:
+    dim_text_encoder: 512 
     class_in_dim: 2084
     class_out_dim: 20
-    logger_name: ./run/run_20240430/
-    curve_tensorb: ./plot/plot_20240430/
-    log_dir: ./log/log_20240430.txt
+    logger_name: ./run/xxx/
+    curve_tensorb: ./plot/xx/
+    log_dir: ./log/xx.txt
     epochs: 200
-    lam1: 100 # 分类损失
-    lam2: 1 # 正交损失
-    lam3: 1 # 重构损失
+    lam1: 100 
+    lam2: 1 
+    lam3: 1
     learning_rate: 0.1
     lr_update: 1000
     log_step: 1
